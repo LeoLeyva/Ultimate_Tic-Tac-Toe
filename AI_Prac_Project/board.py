@@ -29,7 +29,6 @@ class Board:
 
     for n in range(0,self.rows):
       print(horz[n] + "  ", end = "")
-      l = len(self.matrix[n])
       for o in range(0,self.cols):
         if (o + 1!= self.cols or n + 1 == self.rows):
           if o == 3 or o == 6:
@@ -55,7 +54,7 @@ class Board:
 
   def coord_check(self,coords):
     if self.matrix[coords[0]][coords[1]] != " ":
-      raise ex.CoordException()
+      raise ex.CoordException("This tile has already been played on! Please try again!")
 
   def valid_board_check(self, next_move, intended_move):
     n_mv_left = self.moves_left[next_move]
@@ -258,7 +257,7 @@ class Board:
     try:
       (x2, y2) = (self.alpha_to_num[prev_coords[1].capitalize()], self.alpha_to_num[prev_coords[0].capitalize()])
     except:
-      valid_coord = self.coord_check((x1, y1))
+      self.coord_check((x1, y1))
       intended_move = self.coords_to_board[(x1//3, y1//3)]
       self.matrix[x1][y1] = "X"
       self.moves_left[intended_move] -=1
@@ -266,13 +265,13 @@ class Board:
       self.print_board()
       return
   
-    valid_coord = self.coord_check((x1,y1))
+    self.coord_check((x1,y1))
 
     next_move = self.coords_to_board[(x2 % 3, y2 % 3)]
 
     intended_move = self.coords_to_board[(x1//3, y1//3)]
 
-    valid_board = self.valid_board_check(next_move,intended_move)
+    self.valid_board_check(next_move,intended_move)
 
     if player == "1":
       self.matrix[x1][y1] = "X"

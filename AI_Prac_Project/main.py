@@ -52,15 +52,3 @@ def prompt(st, str, bd):
 
 
 main()
-
-
-# let ship_instr=
-#   ANSITerminal.(print_string[magenta]
-#                   ("\n\nWelcome to the 3110 Battleship Game. Place ye' ships!" ^
-#                    "\n\nThese are the commands and format you are able to use:"^
-#                    "\n\nplace <ship name> <coordinates> : use this to place"^
-#                    " your ships at the beginning of the game.\n"
-#                    ^ "An 'A' represents the ships that you have placed.\n" ^
-#                    "    Ex. place martha A.1 A.2\n\n" ^
-#                    "shoot <coordinate> : use this to shoot at the"^
-#                    " other player's board.\n" ^ 

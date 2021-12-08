@@ -1,4 +1,3 @@
-import board as bd
 import exceptions as ex
 
 class State:

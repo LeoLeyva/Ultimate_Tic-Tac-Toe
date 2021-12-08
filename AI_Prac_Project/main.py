@@ -1,10 +1,7 @@
 from typing import ForwardRef
 import board as bord
-import exceptions as ex
 import state as stat
 import command as cd
-# import colorama
-# from colorama import Fore
 
 def main():
   instructions()

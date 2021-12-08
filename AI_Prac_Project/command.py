@@ -31,4 +31,8 @@ def action_creator(str_list):
     return Action(command,obj_phrase)
   elif command == "player" and len(obj_phrase) == 1:
     return Action(command, obj_phrase)
+  elif command == "game" and len(obj_phrase) == 1:
+    return Action(command, obj_phrase)
+  elif command == "ai" and len(obj_phrase) != 0:
+    return Action(command, obj_phrase)
   else: raise ex.MalformedCommandException("Input is not a valid command. Try again!")

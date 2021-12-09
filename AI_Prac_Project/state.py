@@ -5,7 +5,9 @@ class State:
     self.last_coordinates = None
     self.cur_player = "1"
     self.usr_player = ""
+    self.cur_game = ""
     self.player_choice = False
+    self.game_choice = False
   
   def get_cur_player(self):
     return self.cur_player
@@ -38,3 +40,14 @@ class State:
     else: self.usr_player = choice
 
     self.player_choice = True
+  
+  def game(self, choice):
+    if self.game_choice:
+      raise ex.IllegalCommandException(
+          "You have already chosen what game you want to play!")
+    elif choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5":
+      raise ex.IllegalCommandException(
+          "You can only choose games between 1-5!")
+    else: self.cur_game = choice
+
+    self.game_choice = True

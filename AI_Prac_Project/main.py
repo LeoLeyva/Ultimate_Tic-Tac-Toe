@@ -39,6 +39,12 @@ def prompt(st, str, bd):
         if res == "1" or res == "2":
           victory(res)
           break
+        # if (st.cur_game != "1"):
+        #   if(st.cur_game == "2"):
+        #   elif (st.cur_game == "3":
+        #   elif (st.cur_game == "4"):
+          
+        #   str = input()
       elif action.command ==  "player":
         st.player(action.obj_phrase[0])
     except IndexError:

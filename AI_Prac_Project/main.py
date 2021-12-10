@@ -1,6 +1,7 @@
 import board as bord
 import state as stat
 import command as cd
+import opponent as op
 
 def main():
   instructions()
@@ -29,16 +30,36 @@ def prompt(st, str, bd):
   vic = False
   while True:
     try:
+      swtch = False
+      if swtch and st.usr_player != "" and st.cur_player != st.usr_player:
+        if st.cur_game == "2":
+          rd = op.random_ai(bd, st)
+          print(rd)
+          bd.update_board(rd, st.cur_player, st.last_coordinates)
+          st.last_coordinates = rd
+        
+          bd.ttt_check(rd)
+          res = bd.victory_check()
+          if res == "1" or res == "2":
+            victory(res)
+            break
+
+        if st.cur_player == "1":
+          st.cur_player = "2"
+        else:
+          st.cur_player = "1"
+        str = input()
+        continue
       action = cd.parse(str)
       if action.command == "play":
         coords = (action.obj_phrase[0], action.obj_phrase[2])
         st.play(coords, bd)
         bd.ttt_check(coords)
         res = bd.victory_check()
-        print(res)
         if res == "1" or res == "2":
           victory(res)
           break
+        
         # if (st.cur_game != "1"):
         #   if(st.cur_game == "2"):
         #   elif (st.cur_game == "3":
@@ -47,10 +68,13 @@ def prompt(st, str, bd):
         #   str = input()
       elif action.command ==  "player":
         st.player(action.obj_phrase[0])
+      elif action.command == "game":
+        st.game(action.obj_phrase[0])
     except IndexError:
       print("Input is not a valid command. Try again!")
     except Exception as e:
       print(e)
+      print("berp")
     str = input()
 
 

@@ -32,6 +32,9 @@ class State:
     self.last_coordinates = coords
   
   def player(self, choice):
+    if not self.game_choice:
+      raise ex.IllegalCommandException(
+          "You need to decide which opponent you want to play against!")
     if self.player_choice:
       raise ex.IllegalCommandException("You have already chosen what player you want to be!") 
     elif choice != "1" and choice != "2":

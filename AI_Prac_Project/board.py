@@ -1,5 +1,6 @@
 import exceptions as ex
 
+
 class Board:
 
   #######Private#######
@@ -7,11 +8,11 @@ class Board:
   __matrix = []
   __rows = 9
   __cols = 9
-  __alpha_to_num= {"A": 0, "B":1, "C": 2, "D":3, "E":4,"F":5,"G":6,"H":7,"I":8}
-  __moves_left = {"0":9, "1":9, "2":9,"3":9,"4":9,"5":9, "6":9,"7":9, "8":9}
-  __coords_to_board = {(0,0):"0", (1,0):"1", (2,0):"2",(0,1):"3",(1,1):"4",(2,1):"5",(0,2):"6",(1,2):"7",(2,2):"8"}
+  alpha_to_num= {"A": 0, "B":1, "C": 2, "D":3, "E":4,"F":5,"G":6,"H":7,"I":8}
+  moves_left = {"0":9, "1":9, "2":9,"3":9,"4":9,"5":9, "6":9,"7":9, "8":9}
+  coords_to_board = {(0,0):"0", (1,0):"1", (2,0):"2",(0,1):"3",(1,1):"4",(2,1):"5",(0,2):"6",(1,2):"7",(2,2):"8"}
 
-  __board_winners =  {
+  board_winners =  {
       "0": "", "1": "", "2": "", "3": "", "4": "", "5": "", "6": "", "7": "", "8": ""}
 
   def __init__(self):
@@ -23,17 +24,17 @@ class Board:
       self.__matrix.append(mid_row)
 
   def __valid_board_check(self, next_move, intended_move):
-    n_mv_left = self.__moves_left[next_move]
-    i_mv_left = self.__moves_left[intended_move]
+    n_mv_left = self.moves_left[next_move]
+    i_mv_left = self.moves_left[intended_move]
 
     if next_move == intended_move:
       if n_mv_left == 0:
         raise ex.SectionException("This section of the board has no more empty tiles. Choose an empty tile anywhere on the board!")
-      elif self.__board_winners[intended_move] != "":
+      elif self.board_winners[intended_move] != "":
         raise ex.SectionException(
             "This section of the game has already been decided. Choose an empty tile anywhere on the board!")
     elif next_move != intended_move:
-      if self.__board_winners[next_move] != "":
+      if self.board_winners[next_move] != "":
         if i_mv_left == 0:
           raise ex.SectionException(
             "This section of the board has no more empty tiles. Choose an empty tile anywhere on the board!")
@@ -43,23 +44,27 @@ class Board:
             "Based on your opponent's last move, your move is invalid!")
       elif i_mv_left == 0:
         raise ex.SectionException("This section of the board has no more empty tiles. Choose an empty tile anywhere on the board!")
-      elif self.__board_winners[intended_move] != "":
+      elif self.board_winners[intended_move] != "":
         raise ex.SectionException(
             "This section of the game has already been decided. Choose an empty tile anywhere on the board!")
-
+  
+  ###Issues
   def __ttt_row_check(self, c, r):
-    o_streak = 0
-    x_streak = 0
 
-    for row in range(r,r+3):
-      for col in range(c,c+3):
+    for row in range(c,c+3):
+      o_streak = 0
+      x_streak = 0
+      for col in range(r,r+3):
         cur_char = self.__matrix[row][col]
         if cur_char == "O" and x_streak == 0:
           o_streak += 1
         elif cur_char == "X" and o_streak == 0:
           x_streak += 1
-        else:
+        elif cur_char == "X" and o_streak != 0:
           break
+        elif cur_char == "O" and x_streak != 0:
+          break
+     
 
       if o_streak == 3:
         return "O"
@@ -69,17 +74,18 @@ class Board:
   
   def __ttt_col_check(self, r, c):
 
-    o_streak = 0
-    x_streak = 0
-
     for col in range(c,c+3):
+      o_streak = 0
+      x_streak = 0
       for row in range(r, r+3):
         cur_char = self.__matrix[row][col]
         if cur_char == "O" and x_streak == 0:
           o_streak += 1
         elif cur_char == "X" and o_streak == 0:
           x_streak += 1
-        else:
+        elif cur_char == "X" and o_streak != 0:
+          break
+        elif cur_char == "O" and x_streak != 0:
           break
 
       if o_streak == 3:
@@ -107,12 +113,15 @@ class Board:
     o_streak = 0
     x_streak = 0
     for r in range(start, end):
-      winner = self.__board_winners["" + str(r)]
+      winner = self.board_winners["" + str(r)]
       if winner == "O" and x_streak == 0:
         o_streak += 1
       elif winner == "X" and o_streak == 0:
         x_streak += 1
-      else: break
+      elif winner == "X" and o_streak != 0:
+          break
+      elif winner == "O" and x_streak != 0:
+          break
 
     if o_streak == 3:
         return "O"
@@ -124,13 +133,15 @@ class Board:
     o_streak = 0
     x_streak = 0
     for c in range(start, start+7,3):
-      winner = self.__board_winners["" + str(c)]
+      winner = self.board_winners["" + str(c)]
       if winner == "O" and x_streak == 0:
         o_streak += 1
       elif winner == "X" and o_streak == 0:
         x_streak += 1
-      else:
-        break
+      elif winner == "X" and o_streak != 0:
+          break
+      elif winner == "O" and x_streak != 0:
+          break
 
     if o_streak == 3:
       return "O"
@@ -139,13 +150,13 @@ class Board:
     return ""
 
   def __boards_diags_check(self):
-    d1 = self.__board_winners["0"]
-    d2 = self.__board_winners["4"]
-    d3 = self.__board_winners["8"]
+    d1 = self.board_winners["0"]
+    d2 = self.board_winners["4"]
+    d3 = self.board_winners["8"]
 
-    d4 = self.__board_winners["2"]
-    d5 = self.__board_winners["4"]
-    d6 = self.__board_winners["6"]
+    d4 = self.board_winners["2"]
+    d5 = self.board_winners["4"]
+    d6 = self.board_winners["6"]
 
     if (d1 == "O" and d2 == "O" and d3 == "O") or (d4 == "O" and d5 == "O" and d6 == "O"):
         return "O"
@@ -199,8 +210,8 @@ class Board:
 
   def ttt_check(self, coords):
 
-    x = self.__alpha_to_num[coords[0].capitalize()]
-    y = self.__alpha_to_num[coords[1].capitalize()]
+    x = self.alpha_to_num[coords[0].capitalize()]
+    y = self.alpha_to_num[coords[1].capitalize()]
 
     if x < 3:
       x = 0
@@ -216,17 +227,17 @@ class Board:
     else:
       y = 6
 
-    r = self.__ttt_row_check(x, y)
+    r = self.__ttt_row_check(y, x)
     c = self.__ttt_col_check(y, x)
     d = self.__ttt_diag_check(y, x)
 
-    board = self.__coords_to_board[(y//3, x//3)]
+    board = self.coords_to_board[(y//3, x//3)]
 
     if c == "O" or r == "O" or d == "O":
-      self.__board_winners[board] = "O"
+      self.board_winners[board] = "O"
       return "O"
     elif c == "X" or r == "X" or d == "X":
-      self.__board_winners[board] = "X"
+      self.board_winners[board] = "X"
       return "X"
 
     return ""
@@ -262,26 +273,26 @@ class Board:
     
   def update_board(self, coords, player, prev_coords):
     try:
-      (x1, y1) = (self.__alpha_to_num[coords[1].capitalize()], self.__alpha_to_num[coords[0].capitalize()])
+      (x1, y1) = (self.alpha_to_num[coords[1].capitalize()], self.alpha_to_num[coords[0].capitalize()])
     except:
       raise ex.CoordException("Invalid Coordinates! Try again!")
     
     try:
-      (x2, y2) = (self.__alpha_to_num[prev_coords[1].capitalize()], self.__alpha_to_num[prev_coords[0].capitalize()])
+      (x2, y2) = (self.alpha_to_num[prev_coords[1].capitalize()], self.alpha_to_num[prev_coords[0].capitalize()])
     except:
       self.coord_check((x1, y1))
-      intended_move = self.__coords_to_board[(x1//3, y1//3)]
+      intended_move = self.coords_to_board[(x1//3, y1//3)]
       self.__matrix[x1][y1] = "X"
-      self.__moves_left[intended_move] -=1
+      self.moves_left[intended_move] -=1
       print("\n")
       self.print_board()
       return
   
     self.coord_check((x1,y1))
 
-    next_move = self.__coords_to_board[(x2 % 3, y2 % 3)]
+    next_move = self.coords_to_board[(x2 % 3, y2 % 3)]
 
-    intended_move = self.__coords_to_board[(x1//3, y1//3)]
+    intended_move = self.coords_to_board[(x1//3, y1//3)]
 
     self.__valid_board_check(next_move,intended_move)
 
@@ -289,6 +300,6 @@ class Board:
       self.__matrix[x1][y1] = "X"
     else: self.__matrix[x1][y1] = "O"
 
-    self.__moves_left[intended_move] -=1
+    self.moves_left[intended_move] -=1
     print("\n")
     self.print_board()

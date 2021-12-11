@@ -31,7 +31,7 @@ def prompt(st, str, bd):
   while True:
     try:
       swtch = False
-      if swtch and st.usr_player != "" and st.cur_player != st.usr_player:
+      if  st.usr_player != "" and st.cur_player != st.usr_player:
         if st.cur_game == "2":
           rd = op.random_ai(bd, st)
           print(rd)

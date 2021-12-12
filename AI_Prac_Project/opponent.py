@@ -14,14 +14,14 @@ def possible_moves(bd, st):
               3, bd.alpha_to_num[y2.capitalize()] % 3)
   next_move = bd.coords_to_board[(y2 ,x2)]
 
-  print(bd.coords_to_board[(y2, x2)])
+ 
   if bd.moves_left[next_move] == 0 or bd.board_winners[next_move] != "":
     for i in range(0, len(alpha)):
       for j in range(0, len(alpha)):
-        next_move = bd.coords_to_board[(j % 3, i % 3)]
+        next_move = bd.coords_to_board[(i // 3, j // 3)]
         if bd.moves_left[next_move] == 0 or bd.board_winners[next_move] != "":
           continue
-        if bd.get_tile_symbol(i, j) == " ":
+        if bd.get_tile_symbol(i,j ) == " ":
           ans.append((alpha[j], alpha[i]))
     return ans
   
@@ -36,7 +36,6 @@ def possible_moves(bd, st):
 
 def random_ai(bd, st):
   pos = possible_moves(bd,st)
-  print(pos)
   return pos[rd.randrange(0,len(pos))]
 #------------------------
 def greedy_ai():

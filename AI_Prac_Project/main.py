@@ -31,10 +31,12 @@ def prompt(st, str, bd):
   while True:
     try:
       swtch = False
-      if  st.usr_player != "" and st.cur_player != st.usr_player:
+      if st.cur_game != "1" and st.usr_player != "" and st.cur_player != st.usr_player:
         if st.cur_game == "2":
           rd = op.random_ai(bd, st)
+          print("AI: ", end = "")
           print(rd)
+
           bd.update_board(rd, st.cur_player, st.last_coordinates)
           st.last_coordinates = rd
         
@@ -68,6 +70,8 @@ def prompt(st, str, bd):
         #   str = input()
       elif action.command ==  "player":
         st.player(action.obj_phrase[0])
+        if st.cur_player != st.usr_player:
+          continue
       elif action.command == "game":
         st.game(action.obj_phrase[0])
     except IndexError:

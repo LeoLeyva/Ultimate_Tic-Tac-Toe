@@ -27,7 +27,7 @@ class State:
   def play(self, coords, bord):
     if self.ai_v_ai:
       raise ex.IllegalCommandException(
-          "Select the AI agents that you want to against each other!")
+          "Select the AI agents that you want to play against each other!")
     if not self.player_choice:
       raise ex.IllegalCommandException("You need to select what player you want to be: 1 or 2?")
     bord.update_board(coords, self.cur_player, self.last_coordinates)

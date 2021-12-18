@@ -3,19 +3,20 @@ import exceptions as ex
 
 class Board:
 
-  #######Private#######
-  
-  __matrix = []
-  __rows = 9
-  __cols = 9
-  alpha_to_num= {"A": 0, "B":1, "C": 2, "D":3, "E":4,"F":5,"G":6,"H":7,"I":8}
-  moves_left = {"0":9, "1":9, "2":9,"3":9,"4":9,"5":9, "6":9,"7":9, "8":9}
-  coords_to_board = {(0,0):"0", (1,0):"1", (2,0):"2",(0,1):"3",(1,1):"4",(2,1):"5",(0,2):"6",(1,2):"7",(2,2):"8"}
-
-  board_winners =  {
-      "0": "", "1": "", "2": "", "3": "", "4": "", "5": "", "6": "", "7": "", "8": ""}
-
   def __init__(self):
+    #######Private#######
+    self.__matrix = []
+    self.__rows = 9
+    self.__cols = 9
+    self.alpha_to_num = {"A": 0, "B": 1, "C": 2, "D": 3,
+                  "E": 4, "F": 5, "G": 6, "H": 7, "I": 8}
+    self.moves_left = {"0": 9, "1": 9, "2": 9, "3": 9,
+                "4": 9, "5": 9, "6": 9, "7": 9, "8": 9}
+    self.coords_to_board = {(0, 0): "0", (1, 0): "1", (2, 0): "2", (0, 1): "3",
+                     (1, 1): "4", (2, 1): "5", (0, 2): "6", (1, 2): "7", (2, 2): "8"}
+
+    self.board_winners = {
+      "0": "", "1": "", "2": "", "3": "", "4": "", "5": "", "6": "", "7": "", "8": ""}
 
     for l in range(0,9):
       mid_row = []
@@ -272,7 +273,8 @@ class Board:
     return ""
   def draw_check(self):
     for i in range(0,9):
-      if self.moves_left[str(i)] != 0:
+      cur = str(i)
+      if self.moves_left[cur] != 0 and self.board_winners[cur] == "":
         return False
     return True
   def update_board(self, coords, player, prev_coords):

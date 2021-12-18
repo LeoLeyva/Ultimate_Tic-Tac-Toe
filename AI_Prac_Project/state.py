@@ -1,4 +1,5 @@
 import exceptions as ex
+import random as rd
 
 class State:
   def __init__(self):
@@ -8,6 +9,7 @@ class State:
     self.cur_game = ""
     self.player_choice = False
     self.game_choice = False
+    self.ai_v_ai = False
   
   def get_cur_player(self):
     return self.cur_player
@@ -23,6 +25,9 @@ class State:
   
 
   def play(self, coords, bord):
+    if self.ai_v_ai:
+      raise ex.IllegalCommandException(
+          "Select the AI agents that you want to against each other!")
     if not self.player_choice:
       raise ex.IllegalCommandException("You need to select what player you want to be: 1 or 2?")
     bord.update_board(coords, self.cur_player, self.last_coordinates)
@@ -32,6 +37,9 @@ class State:
     self.last_coordinates = coords
   
   def player(self, choice):
+    if self.ai_v_ai:
+      raise ex.IllegalCommandException(
+          "Select the AI agents that you want to against each other!")
     if not self.game_choice:
       raise ex.IllegalCommandException(
           "You need to decide which opponent you want to play against!")
@@ -54,3 +62,20 @@ class State:
     else: self.cur_game = choice
 
     self.game_choice = True
+
+  def player_decider(self, fAI, sAI):
+    if rd.random() <= 0.5:
+      self.cur_ai = fAI
+      self.oth_ai = sAI
+    else:
+      self.cur_ai = sAI
+      self.oth_ai = fAI
+
+  def ai_selector(self, choice):
+    (x, y) = choice
+
+    if (x != "2" and x != "3" and x != "4") or (y != "2" and y != "3" and y != "4"):
+      raise ex.IllegalCommandException(
+          "You can only choose between AI options 2, 3, or 4!")
+    else:
+      self.player_decider(x, y)

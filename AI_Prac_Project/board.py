@@ -270,7 +270,11 @@ class Board:
       return "1"
 
     return ""
-    
+  def draw_check(self):
+    for i in range(0,9):
+      if self.moves_left[str(i)] != 0:
+        return False
+    return True
   def update_board(self, coords, player, prev_coords):
     try:
       (x1, y1) = (self.alpha_to_num[coords[1].capitalize()], self.alpha_to_num[coords[0].capitalize()])
@@ -303,3 +307,4 @@ class Board:
     self.moves_left[intended_move] -=1
     print("\n")
     self.print_board()
+    print("\n")

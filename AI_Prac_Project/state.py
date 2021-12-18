@@ -10,6 +10,8 @@ class State:
     self.player_choice = False
     self.game_choice = False
     self.ai_v_ai = False
+    self.cur_ai = ""
+    self.oth_ai = ""
   
   def get_cur_player(self):
     return self.cur_player

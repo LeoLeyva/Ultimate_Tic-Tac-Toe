@@ -20,8 +20,12 @@ def instructions():
   print("\nFor rules on how to play Ultimate Tic-Tac-Toe, visit the following link: https://www.thegamegal.com/2018/09/01/ultimate-tic-tac-toe/\n")
 
 
-def victory( winner):
-  print("Congrats, Player " + winner + ", you have won!")
+def victory(winner):
+  print("Congrats, Playa' " + winner + ", you have won!")
+
+
+def draw():
+  print("Nobody won, but good game!")
 
 def start_game():
   bd = bord.Board()
@@ -30,7 +34,6 @@ def start_game():
 
 
 def prompt(st, str, bd):
-  vic = False
   while True:
     try:
       swtch = False
@@ -61,9 +64,14 @@ def prompt(st, str, bd):
         st.play(coords, bd)
         bd.ttt_check(coords)
         res = bd.victory_check()
+      
         if res == "1" or res == "2":
           victory(res)
-          break
+          return
+        
+        if bd.draw_check():
+          draw()
+          return
         
         # if (st.cur_game != "1"):
         #   if(st.cur_game == "2"):
@@ -73,16 +81,49 @@ def prompt(st, str, bd):
         #   str = input()
       elif action.command ==  "player":
         st.player(action.obj_phrase[0])
-        if st.cur_player != st.usr_player:
-          continue
       elif action.command == "game":
         st.game(action.obj_phrase[0])
+      elif action.command == "ai":
+        Ais = (action.obj_phrase[0], action.obj_phrase[2])
+        st.ai_selector(Ais)
+        break
     except IndexError:
       print("Input is not a valid command. Try again!")
     except Exception as e:
       print(e)
       print("berp")
     str = input()
+  
+  while True:
+    ai_move = ()
+    if st.cur_ai == "2":
+      ai_move = op.random_ai(bd, st)
+      print("Rand AI " + st.cur_player + ": ", end="")
+    # elif st.cur_ai == "3":
+    #   ai_move = 
+    #   print("Heuristic AI " + st.cur_player + ": ", end="")
+    # elif st.cur_ai == "4":
+    #   ai_move = 
+    #   print("MCTS " + st.cur_player + ": ", end = "")
+    print(ai_move)
+    bd.update_board(ai_move, st.cur_player, st.last_coordinates)
+    st.last_coordinates = ai_move
+    bd.ttt_check(ai_move)
+    res = bd.victory_check()
+    if res == "1" or res == "2":
+        victory(res)
+        break
+    if bd.draw_check():
+        draw()
+        return
+    if st.cur_player == "1":
+      st.cur_player = "2"
+    else:
+        st.cur_player = "1"
+    temp = st.cur_ai
+    st.cur_ai = st.oth_ai
+    st.oth_ai = temp
+    
 
 
 

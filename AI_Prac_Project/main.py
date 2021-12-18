@@ -10,8 +10,11 @@ def main():
 def instructions():
   print("\nWelcome to our version of Ultimate Tic-Tac-Toe! You will essentially be going against our AI in the fight for supremacy XD.") 
   print("\nThese are the commands and format you are able to use:") 
+  print("\n - game <game number 1-5> : this is to select what minigame you want to play (this must be chosen before playing).")
+  print("\n - 1 = Human Player, 2= Randomized AI, 3= Heuristic AI, 4= Monte Carlo Tree Search AI, 5= AI vs. AI.")
+  print("\n - player <player number 1 or 2> : this is to select whether you want to be player 1 or player 2 (this must be chosen before playing).")
+  print("\n - ai <ai number from 2-4><space><,><space><ai number from 2-4> : this is to select what AI agents you want to play against each other (this command can only be entered if you have chosen game 5).")
   print("\n - play <column coordinate><space><,><space><row coordinate> : use this to select a tile to place your symbol on.") 
-  print("\n - player <player number 1 or 2> : this is to select whether you want to be player 1 or player 2 (this can only be chosen in the beginning).") 
   print()
   print("\nValid coordinates are written in the following form:  <Letter: A-I or a-i> <,> <Letter:A-I or a -i>.")
   print("\nFor rules on how to play Ultimate Tic-Tac-Toe, visit the following link: https://www.thegamegal.com/2018/09/01/ultimate-tic-tac-toe/\n")

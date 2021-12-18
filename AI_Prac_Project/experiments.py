@@ -19,9 +19,9 @@ def experiment (ai1,ai2,n):
       # elif st.cur_ai == "3":
       #   ai_move =
       #   print("Heuristic AI " + st.cur_player + ": ", end="")
-      # elif st.cur_ai == "4":
-      #   ai_move =
-      #   print("MCTS " + st.cur_player + ": ", end = "")
+      elif st.cur_ai == "4":
+        ai_move = op.montecarlo_ai(bd, st, 100)
+        print("MCTS " + st.cur_player + ": ", end = "")
       bd.update_board(ai_move, st.cur_player, st.last_coordinates)
       st.last_coordinates = ai_move
       bd.ttt_check(ai_move)

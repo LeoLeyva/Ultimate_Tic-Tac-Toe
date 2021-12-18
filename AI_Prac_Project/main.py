@@ -38,24 +38,44 @@ def prompt(st, str, bd):
     try:
       swtch = False
       if st.cur_game != "1" and st.usr_player != "" and st.cur_player != st.usr_player:
+        ai = ()
         if st.cur_game == "2":
-          rd = op.random_ai(bd, st)
-          print("AI: ", end = "")
-          print(rd)
+          ai = op.random_ai(bd, st)
+          print("Rand AI: ", end = "")
+        elif st.cur_game == "4":
+          print("WE ARER HERE")
+          mc = op.montecarlo_ai(bd,st, 100)
+          print("MCTS AI: ", end="")
+          print(mc)
 
-          bd.update_board(rd, st.cur_player, st.last_coordinates)
-          st.last_coordinates = rd
-        
-          bd.ttt_check(rd)
+          bd.update_board(mc, st.cur_player, st.last_coordinates)
+          st.last_coordinates = mc
+
+          bd.ttt_check(mc)
           res = bd.victory_check()
           if res == "1" or res == "2":
             victory(res)
-            break
+            return
+        
+        print(ai)
 
+        bd.update_board(ai, st.cur_player, st.last_coordinates)
+        st.last_coordinates = ai
+
+        bd.ttt_check(ai)
+        res = bd.victory_check()
+        if res == "1" or res == "2":
+            victory(res)
+            return
+        if bd.draw_check():
+          draw()
+          return
+        
         if st.cur_player == "1":
           st.cur_player = "2"
         else:
           st.cur_player = "1"
+        bd.print_board()
         str = input()
         continue
       action = cd.parse(str)
@@ -72,13 +92,7 @@ def prompt(st, str, bd):
         if bd.draw_check():
           draw()
           return
-        
-        # if (st.cur_game != "1"):
-        #   if(st.cur_game == "2"):
-        #   elif (st.cur_game == "3":
-        #   elif (st.cur_game == "4"):
-          
-        #   str = input()
+        bd.print_board()
       elif action.command ==  "player":
         st.player(action.obj_phrase[0])
       elif action.command == "game":
@@ -102,11 +116,12 @@ def prompt(st, str, bd):
     # elif st.cur_ai == "3":
     #   ai_move = 
     #   print("Heuristic AI " + st.cur_player + ": ", end="")
-    # elif st.cur_ai == "4":
-    #   ai_move = 
-    #   print("MCTS " + st.cur_player + ": ", end = "")
+    elif st.cur_ai == "4":
+      ai_move = op.montecarlo_ai(bd, st, 100)
+      print("MCTS " + st.cur_player + ": ", end = "")
     print(ai_move)
     bd.update_board(ai_move, st.cur_player, st.last_coordinates)
+    bd.print_board()
     st.last_coordinates = ai_move
     bd.ttt_check(ai_move)
     res = bd.victory_check()

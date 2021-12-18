@@ -1,4 +1,5 @@
 import random as rd
+import copy
 
 def possible_moves(bd, st):
   ans = []
@@ -44,5 +45,43 @@ def greedy_ai():
 
 
 #------------------------
-def montecarlo_ai():
-  return
+def montecarlo_ai(real_bd, real_st, depth):
+  
+  
+  score = (-depth*2, -depth*2)
+  
+  for i in possible_moves(real_bd, real_st):
+    points = 0
+    for j in range(depth):
+      bd = copy.deepcopy(real_bd)
+      st = copy.deepcopy(real_st)
+
+      player = st.cur_player
+
+      st.play(i, bd)
+      bd.ttt_check(i)
+
+      if bd.victory_check() == player:
+         return i
+      
+      points += have_fun(player ,bd, st)
+    
+    if score[0] < points:
+        score = points, i
+  return score[1]
+
+def have_fun(player, bd, st):
+  while bd.victory_check() == ""  and not (bd.draw_check()):
+
+    random_move = random_ai(bd, st)
+    st.play(random_move, bd)
+    bd.ttt_check(random_move)
+
+    # bd.print_board()
+
+  if bd.victory_check() == player:
+    return 1
+  elif bd.draw_check():
+    return 0
+  else:
+    return -1

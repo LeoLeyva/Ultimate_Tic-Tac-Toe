@@ -171,6 +171,7 @@ class Board:
     return self.__matrix[row][col]
 
   def print_board(self):
+    print("\n")
     tb_row = ["    A ", " B ", " C ", "    D ",
               " E ", " F ", "    G ", " H ", " I"]
     horz = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
@@ -203,6 +204,7 @@ class Board:
       print(tb_row[j], end="")
 
     print("")
+  print("\n")
 
   def coord_check(self, coords):
     if self.__matrix[coords[0]][coords[1]] != " ":
@@ -290,8 +292,8 @@ class Board:
       intended_move = self.coords_to_board[(x1//3, y1//3)]
       self.__matrix[x1][y1] = "X"
       self.moves_left[intended_move] -=1
-      print("\n")
-      self.print_board()
+      # print("\n")
+      # self.print_board()
       return
   
     self.coord_check((x1,y1))
@@ -307,6 +309,6 @@ class Board:
     else: self.__matrix[x1][y1] = "O"
 
     self.moves_left[intended_move] -=1
-    print("\n")
-    self.print_board()
-    print("\n")
+    # print("\n")
+    # self.print_board()
+    # print("\n")

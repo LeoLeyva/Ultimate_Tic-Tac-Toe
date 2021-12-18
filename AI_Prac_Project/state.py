@@ -37,6 +37,7 @@ class State:
       self.cur_player = "2"
     else: self.cur_player = "1"
     self.last_coordinates = coords
+
   
   def player(self, choice):
     if self.ai_v_ai:
@@ -81,3 +82,5 @@ class State:
           "You can only choose between AI options 2, 3, or 4!")
     else:
       self.player_decider(x, y)
+    
+    self.player_choice = True

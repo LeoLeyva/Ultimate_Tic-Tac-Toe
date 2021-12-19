@@ -42,7 +42,7 @@ def prompt(st, str, bd):
         if st.cur_game == "2":
           ai = op.random_ai(bd, st)
           print("Rand AI: ", end = "")
-        elif st.cur_ai == "3":
+        elif st.cur_game == "3":
           ai = op.greedy_ai(bd, st)
           print("Heuristic AI: ", end="")
         elif st.cur_game == "4":

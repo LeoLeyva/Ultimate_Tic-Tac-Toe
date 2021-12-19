@@ -107,23 +107,23 @@ def greedy_ai(bd, st):
     score = {"center": 10, "diagonal": 7, "other": 5, "win": 100}
     player_to_symbol = {"1": "X", "2": "O"}
     pos = possible_moves(bd, st)
+    print("YOOO")
     curr_matrix = deepcopy(bord.Board.get_matrix(bd))
     best_move = ("", "")
     best_score = 0
     ai_symbol = player_to_symbol[stat.State.get_cur_player(st)]
-    print(ai_symbol)
-    print(pos)
+  
     for move in pos:
+        
         curr_score = 0
+
         x = alpha_to_num[move[0].capitalize()]
         y = alpha_to_num[move[1].capitalize()]
 
         n = get_board_move(x, y)
         sm_bd = deepcopy(get_small_board(n, curr_matrix))
-        print(sm_bd)
         sm_bd[(x % 3)*3+(y % 3)] = ai_symbol
-
-        print(sm_bd)
+       
 
         if(win_row(sm_bd) or win_diag(sm_bd) or win_col(sm_bd)):
             curr_score += score["win"]
@@ -134,7 +134,6 @@ def greedy_ai(bd, st):
             curr_score += score["diagonal"]
         else:
             curr_score += score["other"]
-        print(move, curr_score)
         if curr_score > best_score:
             best_move = move
             best_score = curr_score

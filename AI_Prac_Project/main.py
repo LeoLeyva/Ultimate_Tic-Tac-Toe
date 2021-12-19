@@ -110,7 +110,7 @@ def prompt(st, str, bd):
       print("Heuristic AI " + st.cur_player + ": ", end="")
     elif st.cur_ai == "4":
       ai_move = op.montecarlo_ai(bd, st, 100)
-      print("MCTS AI" + st.cur_player + ": ", end = "")
+      print("MCTS AI " + st.cur_player + ": ", end = "")
     print(ai_move)
     bd.update_board(ai_move, st.cur_player, st.last_coordinates)
     bd.print_board()

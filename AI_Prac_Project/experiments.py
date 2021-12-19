@@ -16,9 +16,9 @@ def experiment (ai1,ai2,n):
       ai_move = ()
       if st.cur_ai == "2":
         ai_move = op.random_ai(bd, st)
-      # elif st.cur_ai == "3":
-      #   ai_move =
-      #   print("Heuristic AI " + st.cur_player + ": ", end="")
+      elif st.cur_ai == "3":
+        ai_move = op.greedy_ai(bd,st)
+        print("Heuristic AI " + st.cur_player + ": ", end="")
       elif st.cur_ai == "4":
         ai_move = op.montecarlo_ai(bd, st, 100)
         print("MCTS " + st.cur_player + ": ", end = "")

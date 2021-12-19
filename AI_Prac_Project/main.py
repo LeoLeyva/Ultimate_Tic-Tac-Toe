@@ -42,20 +42,12 @@ def prompt(st, str, bd):
         if st.cur_game == "2":
           ai = op.random_ai(bd, st)
           print("Rand AI: ", end = "")
+        elif st.cur_ai == "3":
+          ai = op.greedy_ai(bd, st)
+          print("Heuristic AI: ", end="")
         elif st.cur_game == "4":
-          print("WE ARER HERE")
-          mc = op.montecarlo_ai(bd,st, 100)
+          ai = op.montecarlo_ai(bd,st, 100)
           print("MCTS AI: ", end="")
-          print(mc)
-
-          bd.update_board(mc, st.cur_player, st.last_coordinates)
-          st.last_coordinates = mc
-
-          bd.ttt_check(mc)
-          res = bd.victory_check()
-          if res == "1" or res == "2":
-            victory(res)
-            return
         
         print(ai)
 
@@ -113,12 +105,12 @@ def prompt(st, str, bd):
     if st.cur_ai == "2":
       ai_move = op.random_ai(bd, st)
       print("Rand AI " + st.cur_player + ": ", end="")
-    # elif st.cur_ai == "3":
-    #   ai_move = 
-    #   print("Heuristic AI " + st.cur_player + ": ", end="")
+    elif st.cur_ai == "3":
+      ai_move = op.greedy_ai(bd,st)
+      print("Heuristic AI " + st.cur_player + ": ", end="")
     elif st.cur_ai == "4":
       ai_move = op.montecarlo_ai(bd, st, 100)
-      print("MCTS " + st.cur_player + ": ", end = "")
+      print("MCTS AI" + st.cur_player + ": ", end = "")
     print(ai_move)
     bd.update_board(ai_move, st.cur_player, st.last_coordinates)
     bd.print_board()

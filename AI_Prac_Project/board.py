@@ -170,6 +170,8 @@ class Board:
   def get_tile_symbol(self, row, col):
     return self.__matrix[row][col]
 
+  def get_matrix(self):
+    return self.__matrix
   def print_board(self):
     print("\n")
     tb_row = ["    A ", " B ", " C ", "    D ",
